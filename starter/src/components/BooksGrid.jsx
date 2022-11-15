@@ -1,6 +1,8 @@
 const BookGrid = () => {
     return (
-        <p>Book Grid Component</p>
+        <div className="search-books-results">
+            <ol className="books-grid"/>
+        </div>
     )
 }
 export default BookGrid;
