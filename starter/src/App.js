@@ -1,17 +1,17 @@
 import "./App.css";
 import {useState} from "react";
 import BookSearchBar from "./components/BooksSearchBar";
-import BooksShelf from "./components/BooksShelf";
+import BookList from "./components/BooksList";
 
 function App() {
-    const [showSearchPage, setShowSearchpage] = useState(false);
+    const [showSearchPage, setShowSearchPage] = useState(false);
 
     return (
         <div className="app">
             {showSearchPage ? (
-                <BookSearchBar setShowSearchPage={setShowSearchpage} showSearchPage={showSearchPage}/>
+                <BookSearchBar setShowSearchPage={setShowSearchPage} showSearchPage={showSearchPage}/>
             ) : (
-                <BooksShelf/>
+                <BookList />
             )}
         </div>
     );
