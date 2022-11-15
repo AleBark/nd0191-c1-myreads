@@ -1,7 +1,7 @@
 import Book from "./Book";
 import AddBookButton from "./AddBookButton";
 
-const BookList = () => {
+const BookList = ({setShowSearchPage, showSearchPage}) => {
     return (
         <div className="list-books">
             <div className="list-books-title">
@@ -22,7 +22,7 @@ const BookList = () => {
                 </div>
             </div>
             <div className="open-search">
-                <AddBookButton/>
+                <AddBookButton setShowSearchPage={setShowSearchPage} showSearchPage={showSearchPage}/>
             </div>
         </div>
     )

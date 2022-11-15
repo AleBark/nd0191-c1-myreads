@@ -11,7 +11,7 @@ function App() {
             {showSearchPage ? (
                 <BookSearchBar setShowSearchPage={setShowSearchPage} showSearchPage={showSearchPage}/>
             ) : (
-                <BookList />
+                <BookList setShowSearchPage={setShowSearchPage} showSearchPage={showSearchPage}/>
             )}
         </div>
     );
