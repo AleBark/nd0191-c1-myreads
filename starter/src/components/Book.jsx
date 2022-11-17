@@ -1,6 +1,8 @@
-const Book = () => {
+import PropTypes from "prop-types";
+
+const Book = ({id, title, author, imagePath}) => {
     return (
-        <div className="book">
+        <div className="book" id={id}>
             <div className="book-top">
                 <div
                     className="book-cover"
@@ -25,9 +27,16 @@ const Book = () => {
                     </select>
                 </div>
             </div>
-            <div className="book-title">To Kill a Mockingbird</div>
-            <div className="book-authors">Harper Lee</div>
+            <div className="book-title">{title}</div>
+            <div className="book-authors">{author}</div>
         </div>
     )
 }
+
+Book.propTypes = {
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    imagePath: PropTypes.string.isRequired
+};
 export default Book;

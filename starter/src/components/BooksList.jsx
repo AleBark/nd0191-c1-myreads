@@ -1,7 +1,10 @@
 import Book from "./Book";
 import AddBookButton from "./AddBookButton";
+import PropTypes from "prop-types";
 
-const BookList = ({setShowSearchPage, showSearchPage}) => {
+const BooksList = ({setShowSearchPage, showSearchPage, shelves}) => {
+
+
     return (
         <div className="list-books">
             <div className="list-books-title">
@@ -9,16 +12,24 @@ const BookList = ({setShowSearchPage, showSearchPage}) => {
             </div>
             <div className="list-books-content">
                 <div>
-                    <div className="bookshelf">
-                        <h2 className="bookshelf-title">Currently Reading</h2>
-                        <div className="bookshelf-books">
-                            <ol className="books-grid">
-                                <li>
-                                    <Book/>
-                                </li>
-                            </ol>
+                    {shelves.map(shelf => (
+                        <div className="bookshelf">
+                            <h2 className="bookshelf-title">{shelf.name}</h2>
+                            <div className="bookshelf-books">
+                                <ol className="books-grid">
+                                    {
+                                        shelf.books.map(book => (
+                                            <li key={book.id}>
+                                                <Book id={book.id} title={book.title} author={book.author}
+                                                      imagePath={book.imagePath}/>
+                                            </li>
+
+                                        ))
+                                    }
+                                </ol>
+                            </div>
                         </div>
-                    </div>
+                    ))}
                 </div>
             </div>
             <div className="open-search">
@@ -27,4 +38,11 @@ const BookList = ({setShowSearchPage, showSearchPage}) => {
         </div>
     )
 }
-export default BookList;
+
+BooksList.propTypes = {
+    setShowSearchPage: PropTypes.func.isRequired,
+    showSearchPage: PropTypes.bool.isRequired,
+    shelves: PropTypes.array.isRequired,
+};
+
+export default BooksList;
