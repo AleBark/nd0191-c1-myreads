@@ -16,13 +16,14 @@ const BooksList = ({setShowSearchPage, showSearchPage, shelves, onAddBook}) => {
             <div className="list-books-content">
                 <div>
                     {shelves.map(shelf => (
-                        <div className="bookshelf">
+                        <div key={shelf.id} className="bookshelf">
                             <h2 className="bookshelf-title">{shelf.name}</h2>
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
                                     {
-                                        shelf.books.map(book => (
-                                            <li key={book.id} onClick={() => handleOnAddBook(book, shelf.id)}>
+                                        shelf.books.map((book, index) => (
+                                            <li key={index}
+                                                onClick={() => handleOnAddBook(book, shelf.id)}>
                                                 <Book id={book.id} title={book.title} author={book.author}
                                                       imagePath={book.imagePath}/>
                                             </li>

@@ -23,11 +23,11 @@ function App() {
 
 
     function onAddBook(book, shelfId) {
-        setShelves(currentShelves => {
-            const shelf = shelves.find(shelf => shelf.id === shelfId);
-            shelf.books.push(book);
-            return currentShelves;
-        });
+        const shelfIndex = shelves.findIndex(shelf => shelf.id === shelfId);
+        const shelf = {...shelves[shelfIndex]};
+        shelf.books.push(book);
+        shelves.splice(shelfIndex, 1, shelf);
+        setShelves([...shelves]);
     }
 
     return (
