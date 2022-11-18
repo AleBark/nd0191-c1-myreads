@@ -21,11 +21,13 @@ function App() {
         {id: 3, name: "Read", books: []}
     ]);
 
-    const addBookToShelf = (book, shelfId) => {
-        const shelf = shelves.find(shelf => shelf.id === shelfId)
-        shelf.books.push(book)
 
-        setShelves(shelves)
+    function onAddBook(book, shelfId) {
+        setShelves(currentShelves => {
+            const shelf = shelves.find(shelf => shelf.id === shelfId);
+            shelf.books.push(book);
+            return currentShelves;
+        });
     }
 
     return (
@@ -37,6 +39,7 @@ function App() {
                 />
             ) : (
                 <BookList
+                    onAddBook={onAddBook}
                     shelves={shelves}
                     setShowSearchPage={setShowSearchPage}
                     showSearchPage={showSearchPage}

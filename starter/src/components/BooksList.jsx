@@ -2,8 +2,11 @@ import Book from "./Book";
 import AddBookButton from "./AddBookButton";
 import PropTypes from "prop-types";
 
-const BooksList = ({setShowSearchPage, showSearchPage, shelves}) => {
+const BooksList = ({setShowSearchPage, showSearchPage, shelves, onAddBook}) => {
 
+    const handleOnAddBook = (book, shelfId) => {
+        onAddBook(book, shelfId);
+    }
 
     return (
         <div className="list-books">
@@ -19,7 +22,7 @@ const BooksList = ({setShowSearchPage, showSearchPage, shelves}) => {
                                 <ol className="books-grid">
                                     {
                                         shelf.books.map(book => (
-                                            <li key={book.id}>
+                                            <li key={book.id} onClick={() => handleOnAddBook(book, shelf.id)}>
                                                 <Book id={book.id} title={book.title} author={book.author}
                                                       imagePath={book.imagePath}/>
                                             </li>
