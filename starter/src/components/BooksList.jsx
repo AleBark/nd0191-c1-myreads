@@ -2,10 +2,18 @@ import Book from "./Book";
 import AddBookButton from "./AddBookButton";
 import PropTypes from "prop-types";
 
-const BooksList = ({setShowSearchPage, showSearchPage, shelves, onAddBook}) => {
+const BooksList = ({setShowSearchPage, showSearchPage, shelves, onAddBook, onRemoveBook}) => {
 
     const handleOnAddBook = (book, shelfId) => {
         onAddBook(book, shelfId);
+    }
+
+    const handleOnRemoveBook = (book, shelfId) => {
+        onRemoveBook(book, shelfId);
+    }
+
+    const handleOnShelfChangeBook = (book, shelfId) => {
+        //TODO implement handler to change shelf logic
     }
 
     return (
@@ -23,9 +31,9 @@ const BooksList = ({setShowSearchPage, showSearchPage, shelves, onAddBook}) => {
                                     {
                                         shelf.books.map((book, index) => (
                                             <li key={index}
-                                                onClick={() => handleOnAddBook(book, shelf.id)}>
+                                                onClick={() => onRemoveBook(book, shelf.id)}>
                                                 <Book id={book.id} title={book.title} author={book.author}
-                                                      imagePath={book.imagePath}/>
+                                                      imagePath={book.imagePath} shelfName={shelf.name}/>
                                             </li>
 
                                         ))
