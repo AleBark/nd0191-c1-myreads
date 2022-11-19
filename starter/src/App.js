@@ -1,5 +1,5 @@
 import "./App.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import BookSearchBar from "./components/BooksSearchBar";
 import BookList from "./components/BooksList";
 
@@ -62,6 +62,14 @@ function App() {
             ]
         }
     ]);
+
+    useEffect(() => {
+        setShelves(JSON.parse(window.localStorage.getItem('shelves')));
+    }, []);
+
+    useEffect(() => {
+        window.localStorage.setItem('shelves', JSON.stringify(shelves));
+    }, [shelves]);
 
     function onAddBook(currentBook, shelfId) {
         const shelfIndex = shelves.findIndex(shelf => shelf.id === shelfId);
