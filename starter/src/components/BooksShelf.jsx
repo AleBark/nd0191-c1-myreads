@@ -8,7 +8,6 @@ const BooksShelf = ({shelf, handleOnShelfChangeBook}) => {
                 <ol className="books-grid">
                     {
                         shelf.books.map((book, index) => (
-
                             <li key={index}>
                                 <Book id={book.id} title={book.title} author={book.author}
                                       imagePath={book.imagePath} shelfId={shelf.id}
