@@ -1,6 +1,18 @@
-const AddBookButton = ({setShowSearchPage, showSearchPage}) => {
+const AddBookButton = ({onOpenSearchPage}) => {
+
+    const handleOnOpenSearchPage = (e) => {
+        e.preventDefault()
+        onOpenSearchPage()
+    }
+
     return (
-        <a onClick={() => setShowSearchPage(!showSearchPage)}>Add a book</a>
+        <a
+            href="/#"
+            className="open-search"
+            onClick={(e) => handleOnOpenSearchPage(e)}
+        >
+            Close
+        </a>
     )
 }
 

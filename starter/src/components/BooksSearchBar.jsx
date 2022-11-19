@@ -1,12 +1,19 @@
 import BooksGrid from "./BooksGrid";
 
-const BookSearchBar = ({setShowSearchPage, showSearchPage}) => {
+const BookSearchBar = ({onCloseSearchPage}) => {
+
+    const handleOnCloseSearchPage = (e) => {
+        e.preventDefault()
+        onCloseSearchPage()
+    }
+
     return (
         <div className="search-books">
             <div className="search-books-bar">
                 <a
+                    href="/#"
                     className="close-search"
-                    onClick={() => setShowSearchPage(!showSearchPage)}
+                    onClick={(e) => handleOnCloseSearchPage(e)}
                 >
                     Close
                 </a>

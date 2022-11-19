@@ -1,9 +1,13 @@
 import "./App.css";
 import {useEffect, useState} from "react";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import BookSearchBar from "./components/BooksSearchBar";
 import BookList from "./components/BooksList";
+import AddBookButton from "./components/AddBookButton";
 
 function App() {
+    let navigate = useNavigate();
+
     const [showSearchPage, setShowSearchPage] = useState(false);
 
     const [shelves, setShelves] = useState([
@@ -110,21 +114,39 @@ function App() {
         return shelves[shelfIndex].books.findIndex(book => book.id === currentBook.id)
     }
 
+    function onOpenSearchPage() {
+        navigate("/search-page");
+    }
+
+    function onCloseSearchPage() {
+        navigate("/");
+    }
+
     return (
         <div className="app">
-            {showSearchPage ? (
-                <BookSearchBar
-                    setShowSearchPage={setShowSearchPage}
-                    showSearchPage={showSearchPage}
+            <Routes>
+                <Route
+                    exact
+                    path="/"
+                    element={
+                        <BookList
+                            shelves={shelves}
+                            onShelfChangeBook={onShelfChangeBook}
+                            setShowSearchPage={setShowSearchPage}
+                            showSearchPage={showSearchPage}
+                        />
+                    }
                 />
-            ) : (
-                <BookList
-                    shelves={shelves}
-                    onShelfChangeBook={onShelfChangeBook}
-                    setShowSearchPage={setShowSearchPage}
-                    showSearchPage={showSearchPage}
+                <Route
+                    path="/search-page"
+                    element={
+                        <BookSearchBar onCloseSearchPage={onCloseSearchPage}/>
+                    }
                 />
-            )}
+            </Routes>
+            <div className="open-search">
+                <AddBookButton onOpenSearchPage={onOpenSearchPage}/>
+            </div>
         </div>
     );
 }

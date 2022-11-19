@@ -1,8 +1,7 @@
-import AddBookButton from "./AddBookButton";
 import PropTypes from "prop-types";
 import BooksShelf from "./BooksShelf";
 
-const BooksList = ({setShowSearchPage, showSearchPage, shelves, onShelfChangeBook}) => {
+const BooksList = ({shelves, onShelfChangeBook}) => {
 
     const handleOnShelfChangeBook = (bookId, fromShelfId, toShelfId) => {
         onShelfChangeBook(bookId, fromShelfId, toShelfId)
@@ -16,20 +15,15 @@ const BooksList = ({setShowSearchPage, showSearchPage, shelves, onShelfChangeBoo
             <div className="list-books-content">
                 <div>
                     {shelves.map(shelf => (
-                        <BooksShelf shelf={shelf} handleOnShelfChangeBook={handleOnShelfChangeBook}/>
+                        <BooksShelf key={shelf.id} shelf={shelf} handleOnShelfChangeBook={handleOnShelfChangeBook}/>
                     ))}
                 </div>
-            </div>
-            <div className="open-search">
-                <AddBookButton setShowSearchPage={setShowSearchPage} showSearchPage={showSearchPage}/>
             </div>
         </div>
     )
 }
 
 BooksList.propTypes = {
-    setShowSearchPage: PropTypes.func.isRequired,
-    showSearchPage: PropTypes.bool.isRequired,
     shelves: PropTypes.array.isRequired,
     onShelfChangeBook: PropTypes.func.isRequired
 };

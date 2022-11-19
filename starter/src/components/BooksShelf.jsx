@@ -2,7 +2,7 @@ import Book from "./Book";
 
 const BooksShelf = ({shelf, handleOnShelfChangeBook}) => {
     return (
-        <div key={shelf.id} className="bookshelf">
+        <div className="bookshelf">
             <h2 className="bookshelf-title">{shelf.name}</h2>
             <div className="bookshelf-books">
                 <ol className="books-grid">
