@@ -12,8 +12,8 @@ const BooksList = ({setShowSearchPage, showSearchPage, shelves, onAddBook, onRem
         onRemoveBook(book, shelfId);
     }
 
-    const handleOnShelfChangeBook = (book, fromShelfId, toShelfId) => {
-        onShelfChangeBook(book, fromShelfId, toShelfId)
+    const handleOnShelfChangeBook = (bookId, fromShelfId, toShelfId) => {
+        onShelfChangeBook(bookId, fromShelfId, toShelfId)
     }
 
     return (
