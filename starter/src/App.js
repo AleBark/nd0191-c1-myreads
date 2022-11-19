@@ -63,12 +63,12 @@ function App() {
         }
     ]);
 
-
     function onAddBook(currentBook, shelfId) {
         const shelfIndex = shelves.findIndex(shelf => shelf.id === shelfId);
         const shelf = {...shelves[shelfIndex]};
         shelf.books.push(currentBook);
         shelves.splice(shelfIndex, 1, shelf);
+
         setShelves([...shelves]);
     }
 
@@ -76,13 +76,9 @@ function App() {
         const shelfIndex = shelves.findIndex(shelf => shelf.id === shelfId);
         const shelf = {...shelves[shelfIndex]};
         const bookIndex = shelf.books.findIndex(book => book.id === currentBook.id)
-
         shelf.books.splice(bookIndex, 1);
-        setShelves([...shelves]);
-    }
 
-    function checkIfBookIsAlreadyOnShelf(currentBook, shelfIndex) {
-        return shelves[shelfIndex].books.findIndex(book => book.id === currentBook.id)
+        setShelves([...shelves]);
     }
 
     function onShelfChangeBook(currentBookId, fromShelfId, toShelfId) {
@@ -102,6 +98,9 @@ function App() {
         onAddBook(book, toShelfId)
     }
 
+    function checkIfBookIsAlreadyOnShelf(currentBook, shelfIndex) {
+        return shelves[shelfIndex].books.findIndex(book => book.id === currentBook.id)
+    }
 
     return (
         <div className="app">
@@ -112,10 +111,8 @@ function App() {
                 />
             ) : (
                 <BookList
-                    onAddBook={onAddBook}
-                    onRemoveBook={onRemoveBook}
-                    onShelfChangeBook={onShelfChangeBook}
                     shelves={shelves}
+                    onShelfChangeBook={onShelfChangeBook}
                     setShowSearchPage={setShowSearchPage}
                     showSearchPage={showSearchPage}
                 />

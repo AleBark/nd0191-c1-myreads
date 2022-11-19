@@ -1,16 +1,8 @@
-import Book from "./Book";
 import AddBookButton from "./AddBookButton";
 import PropTypes from "prop-types";
+import BooksShelf from "./BooksShelf";
 
-const BooksList = ({setShowSearchPage, showSearchPage, shelves, onAddBook, onRemoveBook, onShelfChangeBook}) => {
-
-    const handleOnAddBook = (book, shelfId) => {
-        onAddBook(book, shelfId);
-    }
-
-    const handleOnRemoveBook = (book, shelfId) => {
-        onRemoveBook(book, shelfId);
-    }
+const BooksList = ({setShowSearchPage, showSearchPage, shelves, onShelfChangeBook}) => {
 
     const handleOnShelfChangeBook = (bookId, fromShelfId, toShelfId) => {
         onShelfChangeBook(bookId, fromShelfId, toShelfId)
@@ -24,24 +16,7 @@ const BooksList = ({setShowSearchPage, showSearchPage, shelves, onAddBook, onRem
             <div className="list-books-content">
                 <div>
                     {shelves.map(shelf => (
-                        <div key={shelf.id} className="bookshelf">
-                            <h2 className="bookshelf-title">{shelf.name}</h2>
-                            <div className="bookshelf-books">
-                                <ol className="books-grid">
-                                    {
-                                        shelf.books.map((book, index) => (
-
-                                            <li key={index}>
-                                                <Book id={book.id} title={book.title} author={book.author}
-                                                      imagePath={book.imagePath} shelfId={shelf.id}
-                                                      onShelfChange={handleOnShelfChangeBook}/>
-                                            </li>
-
-                                        ))
-                                    }
-                                </ol>
-                            </div>
-                        </div>
+                        <BooksShelf shelf={shelf} handleOnShelfChangeBook={handleOnShelfChangeBook}/>
                     ))}
                 </div>
             </div>
@@ -56,6 +31,7 @@ BooksList.propTypes = {
     setShowSearchPage: PropTypes.func.isRequired,
     showSearchPage: PropTypes.bool.isRequired,
     shelves: PropTypes.array.isRequired,
+    onShelfChangeBook: PropTypes.func.isRequired
 };
 
 export default BooksList;
