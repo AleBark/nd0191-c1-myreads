@@ -2,7 +2,7 @@ import Book from "./Book";
 import AddBookButton from "./AddBookButton";
 import PropTypes from "prop-types";
 
-const BooksList = ({setShowSearchPage, showSearchPage, shelves, onAddBook, onRemoveBook}) => {
+const BooksList = ({setShowSearchPage, showSearchPage, shelves, onAddBook, onRemoveBook, onShelfChangeBook}) => {
 
     const handleOnAddBook = (book, shelfId) => {
         onAddBook(book, shelfId);
@@ -12,8 +12,8 @@ const BooksList = ({setShowSearchPage, showSearchPage, shelves, onAddBook, onRem
         onRemoveBook(book, shelfId);
     }
 
-    const handleOnShelfChangeBook = (book, shelfId) => {
-        //TODO implement handler to change shelf logic
+    const handleOnShelfChangeBook = (book, fromShelfId, toShelfId) => {
+        onShelfChangeBook(book, fromShelfId, toShelfId)
     }
 
     return (
@@ -30,10 +30,11 @@ const BooksList = ({setShowSearchPage, showSearchPage, shelves, onAddBook, onRem
                                 <ol className="books-grid">
                                     {
                                         shelf.books.map((book, index) => (
-                                            <li key={index}
-                                                onClick={() => onRemoveBook(book, shelf.id)}>
+
+                                            <li key={index}>
                                                 <Book id={book.id} title={book.title} author={book.author}
-                                                      imagePath={book.imagePath} shelfName={shelf.name}/>
+                                                      imagePath={book.imagePath} shelfId={shelf.id}
+                                                      onShelfChange={handleOnShelfChangeBook}/>
                                             </li>
 
                                         ))

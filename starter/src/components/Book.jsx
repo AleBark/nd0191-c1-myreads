@@ -1,13 +1,11 @@
 import PropTypes from "prop-types";
 
-const Book = ({title, author, imagePath, shelfName}) => {
+const Book = ({id, title, author, imagePath, shelfId, onShelfChange}) => {
 
-    const camelCaseShelfName = shelfName.split(' ').map((word, index) => {
-        if (index === 0) {
-            return word.toLowerCase();
-        }
-        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    }).join('');
+    const handleChange = event => {
+        onShelfChange(id, shelfId, event.target.value);
+        console.log(id, shelfId, event.target.value)
+    };
 
     return (
         <div className="book">
@@ -21,20 +19,20 @@ const Book = ({title, author, imagePath, shelfName}) => {
                     }}
                 />
                 <div className="book-shelf-changer">
-                    <select name="shelves" value={camelCaseShelfName}>
-                        <option value="none" disabled>
+                    <select name="shelves" value={shelfId} onChange={handleChange}>
+                        <option value="shelfId" disabled>
                             Move to...
                         </option>
-                        <option value="currentlyReading">
+                        <option value="1">
                             Currently Reading
                         </option>
-                        <option value="wantToRead">
+                        <option value="2">
                             Want to Read
                         </option>
-                        <option value="read">
+                        <option value="3">
                             Read
                         </option>
-                        <option value="none">
+                        <option value="4">
                             None
                         </option>
                     </select>
@@ -47,9 +45,9 @@ const Book = ({title, author, imagePath, shelfName}) => {
 }
 
 Book.propTypes = {
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
-    shelfName: PropTypes.string.isRequired,
     imagePath: PropTypes.string.isRequired
 };
 export default Book;
