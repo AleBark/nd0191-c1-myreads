@@ -62,21 +62,15 @@ function App() {
         setShelves([...shelves]);
     }
 
-    function updateBookShelf(book, toShelfId) {
-        const updateBookShelfFromApi = async (book, toShelfId) => {
-            return await BooksAPI.update(book, toShelfId)
-        }
+    function onBooksSearch(searchTerm) {
+        const getBooks = async (searchTerm) => {
+            return await BooksAPI.search(searchTerm)
+        };
 
-        updateBookShelfFromApi(book, toShelfId).then(shelves => setShelvesFromApi(shelves))
-        updateBookResultsGrid(book, toShelfId)
-    }
-
-    function updateBookResultsGrid(currentBook, toShelfId) {
-        if (bookSearchResults.length) {
-            const bookIndex = bookSearchResults.findIndex(book => book.id === currentBook.id)
-            bookSearchResults[bookIndex].shelfId = toShelfId;
-            setBookSearchResults([...bookSearchResults]);
-        }
+        getBooks(searchTerm).then((results) => {
+            const treatedResults = treatApiResults(results)
+            setBookSearchResults(treatedResults)
+        })
     }
 
     function onShelfChangeBook(currentBookId, fromShelfId, toShelfId) {
@@ -119,6 +113,20 @@ function App() {
             updateBookShelf(book, toShelfId)
         }
 
+    }
+
+    function updateBookShelf(book, toShelfId) {
+        const updateBookShelfFromApi = async (book, toShelfId) => {
+            return await BooksAPI.update(book, toShelfId)
+        }
+
+        updateBookShelfFromApi(book, toShelfId).then(shelves => setShelvesFromApi(shelves))
+
+        if (bookSearchResults.length) {
+            const bookIndex = bookSearchResults.findIndex(bookResult => bookResult.id === book.id)
+            bookSearchResults[bookIndex].shelfId = toShelfId;
+            setBookSearchResults([...bookSearchResults]);
+        }
     }
 
     function bookIsBeingMovedBetweenShelves(fromShelfId, toShelfId) {
@@ -170,17 +178,6 @@ function App() {
         }
 
         return treatedResults;
-    }
-
-    function onBooksSearch(searchTerm) {
-        const getBooks = async (searchTerm) => {
-            return await BooksAPI.search(searchTerm)
-        };
-
-        getBooks(searchTerm).then((results) => {
-            const treatedResults = treatApiResults(results)
-            setBookSearchResults(treatedResults)
-        })
     }
 
     function onOpenSearchPage() {
