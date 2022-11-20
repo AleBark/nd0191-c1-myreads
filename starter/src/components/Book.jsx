@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 const Book = ({id, title, author, imagePath, shelfId, onShelfChange}) => {
 
     const handleChange = event => {
-        const toShelfId = parseInt(event.target.value)
+        const toShelfId = parseInt(event.target.value);
         onShelfChange(id, shelfId, toShelfId);
     };
 
@@ -45,7 +45,7 @@ const Book = ({id, title, author, imagePath, shelfId, onShelfChange}) => {
 }
 
 Book.propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     imagePath: PropTypes.string.isRequired

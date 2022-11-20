@@ -5,6 +5,7 @@ const BookGrid = ({booksFromAPI, onShelfChangeBook}) => {
     const handleOnShelfChangeBook = (bookId, fromShelfId, toShelfId) => {
         onShelfChangeBook(bookId, fromShelfId, toShelfId)
     }
+
     return (
         <div className="search-books-results">
             <ol className="books-grid">
@@ -13,9 +14,10 @@ const BookGrid = ({booksFromAPI, onShelfChangeBook}) => {
                         <li key={index}>
                             <Book id={book.id} title={book.title} author={book.author}
                                   imagePath={book.imagePath} shelfId={4}
-                                  onShelfChange={handleOnShelfChangeBook}/>
+                                  onShelfChange={handleOnShelfChangeBook}
+                            />
                         </li>
-                    )) : <li>No results found, try another search term on</li>
+                    )) : <li/>
                 }
             </ol>
         </div>
