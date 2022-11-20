@@ -1,11 +1,15 @@
 import PropTypes from "prop-types";
 
-const Book = ({id, title, author, imagePath, shelfId, onShelfChange}) => {
+const Book = ({id, title, author, imagePath, shelfId, onShelfChange, onShowBookDetails}) => {
 
-    const handleChange = event => {
+    const handleChange = (event) => {
         const toShelfId = event.target.value;
         onShelfChange(id, shelfId, toShelfId);
     };
+
+    const handleShowBook = (bookId) => {
+        onShowBookDetails(bookId)
+    }
 
     return (
         <div className="book">
@@ -15,8 +19,10 @@ const Book = ({id, title, author, imagePath, shelfId, onShelfChange}) => {
                     style={{
                         width: 128,
                         height: 193,
-                        backgroundImage: `url(${imagePath})`
+                        backgroundImage: `url(${imagePath})`,
+                        cursor: 'pointer',
                     }}
+                    onClick={() => handleShowBook(id)}
                 />
                 <div className="book-shelf-changer">
                     <select name="shelves" value={shelfId} onChange={handleChange}>
@@ -48,6 +54,8 @@ Book.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
-    imagePath: PropTypes.string.isRequired
+    imagePath: PropTypes.string.isRequired,
+    onShelfChange: PropTypes.func.isRequired,
+    onShowBookDetails: PropTypes.func.isRequired
 };
 export default Book;

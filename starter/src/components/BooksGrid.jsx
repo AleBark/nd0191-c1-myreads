@@ -1,9 +1,13 @@
 import Book from "./Book";
 
-const BookGrid = ({booksFromAPI, onShelfChangeBook}) => {
+const BookGrid = ({booksFromAPI, onShelfChangeBook, onShowBookDetails}) => {
 
     const handleOnShelfChangeBook = (bookId, fromShelfId, toShelfId) => {
         onShelfChangeBook(bookId, fromShelfId, toShelfId)
+    }
+
+    const handleOnShowBookDetails = (bookId) => {
+        onShowBookDetails(bookId)
     }
 
     return (
@@ -15,6 +19,7 @@ const BookGrid = ({booksFromAPI, onShelfChangeBook}) => {
                             <Book id={book.id} title={book.title} author={book.author}
                                   imagePath={book.imagePath} shelfId={book.shelfId}
                                   onShelfChange={handleOnShelfChangeBook}
+                                  onShowBookDetails={handleOnShowBookDetails}
                             />
                         </li>
                     )) : <li/>

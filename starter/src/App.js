@@ -6,6 +6,7 @@ import BookList from "./components/BooksList";
 import AddBookButton from "./components/AddBookButton";
 import * as BooksAPI from "./BooksAPI"
 import BooksGrid from "./components/BooksGrid";
+import BookDetails from "./components/BookDetails";
 
 function App() {
     let navigate = useNavigate();
@@ -13,6 +14,7 @@ function App() {
     const [showSearchPage, setShowSearchPage] = useState(false);
     const [shelvesFromApi, setShelvesFromApi] = useState({});
     const [bookSearchResults, setBookSearchResults] = useState([]);
+    const [lastViewedBook, setLastViewedBook] = useState({})
 
     const [shelves, setShelves] = useState([
         {
@@ -26,15 +28,18 @@ function App() {
         },
     ]);
 
+
     useEffect(() => {
         setShelves(JSON.parse(window.localStorage.getItem('shelves')));
         setShelvesFromApi(JSON.parse(window.localStorage.getItem('shelvesFromApi')));
+        setLastViewedBook(JSON.parse(window.localStorage.getItem('lastViewedBook')));
     }, []);
 
     useEffect(() => {
         window.localStorage.setItem('shelves', JSON.stringify(shelves));
         window.localStorage.setItem('shelvesFromApi', JSON.stringify(shelvesFromApi));
-    }, [shelves, shelvesFromApi]);
+        window.localStorage.setItem('lastViewedBook', JSON.stringify(lastViewedBook));
+    }, [shelves, shelvesFromApi, lastViewedBook]);
 
     function onAddBook(currentBook, shelfId) {
         const shelfIndex = shelves.findIndex(shelf => shelf.id === shelfId);
@@ -189,6 +194,22 @@ function App() {
         setBookSearchResults([]);
     }
 
+    function onShowBookDetails(bookId) {
+        const getBookFromApi = async (currentBookId) => {
+            return await BooksAPI.get(currentBookId)
+        };
+
+        getBookFromApi(bookId).then((book) => {
+            setLastViewedBook(book);
+        }).then(() => {
+            window.open('/details', '_blank')
+        })
+    }
+
+    function onCloseBookDetails() {
+        navigate("/");
+    }
+
     return (
         <div className="app">
             <Routes>
@@ -199,6 +220,7 @@ function App() {
                         <BookList
                             shelves={shelves}
                             onShelfChangeBook={onShelfChangeBook}
+                            onShowBookDetails={onShowBookDetails}
                             setShowSearchPage={setShowSearchPage}
                             showSearchPage={showSearchPage}
                         />
@@ -215,11 +237,21 @@ function App() {
                         />
                     }
                 />
+                <Route
+                    path="/details"
+                    element={
+                        <BookDetails
+                            lastViewedBook={lastViewedBook}
+                            onCloseDetailsPage={onCloseBookDetails}
+                        />
+                    }
+                />
             </Routes>
             <div className="open-search">
                 <AddBookButton onOpenSearchPage={onOpenSearchPage}/>
             </div>
-            <BooksGrid booksFromAPI={bookSearchResults} onShelfChangeBook={onShelfChangeBook}/>
+            <BooksGrid booksFromAPI={bookSearchResults} onShelfChangeBook={onShelfChangeBook}
+                       onShowBookDetails={onShowBookDetails}/>
         </div>
     );
 }

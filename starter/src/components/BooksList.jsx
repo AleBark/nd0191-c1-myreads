@@ -1,10 +1,14 @@
 import PropTypes from "prop-types";
 import BooksShelf from "./BooksShelf";
 
-const BooksList = ({shelves, onShelfChangeBook}) => {
+const BooksList = ({shelves, onShelfChangeBook, onShowBookDetails}) => {
 
     const handleOnShelfChangeBook = (bookId, fromShelfId, toShelfId) => {
         onShelfChangeBook(bookId, fromShelfId, toShelfId)
+    }
+
+    const handleOnShowBookDetails = (bookId) => {
+        onShowBookDetails(bookId)
     }
 
     return (
@@ -15,7 +19,8 @@ const BooksList = ({shelves, onShelfChangeBook}) => {
             <div className="list-books-content">
                 <div>
                     {shelves.map(shelf => (
-                        <BooksShelf key={shelf.id} shelf={shelf} handleOnShelfChangeBook={handleOnShelfChangeBook}/>
+                        <BooksShelf key={shelf.id} shelf={shelf} handleOnShelfChangeBook={handleOnShelfChangeBook}
+                                    handleOnShowBookDetails={handleOnShowBookDetails}/>
                     ))}
                 </div>
             </div>
@@ -25,7 +30,8 @@ const BooksList = ({shelves, onShelfChangeBook}) => {
 
 BooksList.propTypes = {
     shelves: PropTypes.array.isRequired,
-    onShelfChangeBook: PropTypes.func.isRequired
+    onShelfChangeBook: PropTypes.func.isRequired,
+    onShowBookDetails: PropTypes.func.isRequired
 };
 
 export default BooksList;

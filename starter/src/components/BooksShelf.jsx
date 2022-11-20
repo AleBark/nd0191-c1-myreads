@@ -1,6 +1,7 @@
 import Book from "./Book";
 
-const BooksShelf = ({shelf, handleOnShelfChangeBook}) => {
+const BooksShelf = ({shelf, handleOnShelfChangeBook, handleOnShowBookDetails}) => {
+
     return (
         <div className="bookshelf">
             <h2 className="bookshelf-title">{shelf.name}</h2>
@@ -12,7 +13,9 @@ const BooksShelf = ({shelf, handleOnShelfChangeBook}) => {
                                 <li key={index}>
                                     <Book id={book.id} title={book.title} author={book.author}
                                           imagePath={book.imagePath} shelfId={shelf.id}
-                                          onShelfChange={handleOnShelfChangeBook}/>
+                                          onShelfChange={handleOnShelfChangeBook}
+                                          onShowBookDetails={handleOnShowBookDetails}
+                                    />
                                 </li>
 
                             ))
