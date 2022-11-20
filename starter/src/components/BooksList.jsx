@@ -18,10 +18,17 @@ const BooksList = ({shelves, onShelfChangeBook, onShowBookDetails}) => {
             </div>
             <div className="list-books-content">
                 <div>
-                    {shelves.map(shelf => (
-                        <BooksShelf key={shelf.id} shelf={shelf} handleOnShelfChangeBook={handleOnShelfChangeBook}
-                                    handleOnShowBookDetails={handleOnShowBookDetails}/>
-                    ))}
+                    {
+                        shelves && shelves.length ?
+                            shelves.map(shelf => (
+                            <BooksShelf
+                                key={shelf.id}
+                                shelf={shelf}
+                                handleOnShelfChangeBook={handleOnShelfChangeBook}
+                                handleOnShowBookDetails={handleOnShowBookDetails}/>
+                            ))
+                        : ''
+                    }
                 </div>
             </div>
         </div>
