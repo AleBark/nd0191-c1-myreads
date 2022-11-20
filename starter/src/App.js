@@ -126,8 +126,8 @@ function App() {
                     let bookObj = {
                         id: parseInt(result.id),
                         title: result.title ?? 'Unknown',
-                        author: result.authors ? result.authors.join(',') : 'Unknown',
-                        imagePath: result.imageLinks.thumbnail ?? ''
+                        author: (result && result.authors) ? result.authors.join(',') : 'Unknown',
+                        imagePath: (result && result.imageLinks) ? result.imageLinks.thumbnail : ''
                     }
                     treatedResults.push(bookObj);
                 })
@@ -155,6 +155,7 @@ function App() {
 
     function onCloseSearchPage() {
         navigate("/");
+        setBookSearchResults([]);
     }
 
     return (

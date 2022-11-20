@@ -12,10 +12,10 @@ const BookGrid = ({booksFromAPI, onShelfChangeBook}) => {
                     booksFromAPI.length ? booksFromAPI.map((book, index) => (
                         <li key={index}>
                             <Book id={book.id} title={book.title} author={book.author}
-                                  imagePath={book.imagePath} shelfId={0}
+                                  imagePath={book.imagePath} shelfId={4}
                                   onShelfChange={handleOnShelfChangeBook}/>
                         </li>
-                    )) : <li>Sorry, no results found :(</li>
+                    )) : <li>No results found, try another search term on</li>
                 }
             </ol>
         </div>
