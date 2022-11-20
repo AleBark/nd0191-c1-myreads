@@ -4,6 +4,8 @@ import {Route, Routes, useNavigate} from "react-router-dom";
 import BookSearchBar from "./components/BooksSearchBar";
 import BookList from "./components/BooksList";
 import AddBookButton from "./components/AddBookButton";
+import * as BooksAPI from "./BooksAPI"
+import BooksGrid from "./components/BooksGrid";
 
 function App() {
     let navigate = useNavigate();
@@ -67,6 +69,8 @@ function App() {
         }
     ]);
 
+    const [bookSearchResults, setBookSearchResults] = useState([]);
+
     useEffect(() => {
         setShelves(JSON.parse(window.localStorage.getItem('shelves')));
     }, []);
@@ -114,8 +118,39 @@ function App() {
         return shelves[shelfIndex].books.findIndex(book => book.id === currentBook.id)
     }
 
+    function treatApiResults(results) {
+        let treatedResults = [];
+        if (results && results.length) {
+            if (!results.hasOwnProperty('error')) {
+                results.forEach(function (result) {
+                    let bookObj = {
+                        id: parseInt(result.id),
+                        title: result.title ?? 'Unknown',
+                        author: result.authors ? result.authors.join(',') : 'Unknown',
+                        imagePath: result.imageLinks.thumbnail ?? ''
+                    }
+                    treatedResults.push(bookObj);
+                })
+            }
+        }
+
+        return treatedResults;
+    }
+
+    function onBooksSearch(event) {
+        const searchTerm = event.target.value;
+        const getBooks = async (searchTerm) => {
+            return await BooksAPI.search(searchTerm)
+        };
+
+        getBooks(searchTerm).then((results) => {
+            const treatedResults = treatApiResults(results)
+            setBookSearchResults(treatedResults)
+        })
+    }
+
     function onOpenSearchPage() {
-        navigate("/search-page");
+        navigate("/search");
     }
 
     function onCloseSearchPage() {
@@ -138,15 +173,21 @@ function App() {
                     }
                 />
                 <Route
-                    path="/search-page"
+                    path="/search"
                     element={
-                        <BookSearchBar onCloseSearchPage={onCloseSearchPage}/>
+                        <BookSearchBar
+                            onCloseSearchPage={onCloseSearchPage}
+                            onBooksSearch={onBooksSearch}
+                            booksSearchResult={bookSearchResults}
+                            onShelfChangeBook={onShelfChangeBook}
+                        />
                     }
                 />
             </Routes>
             <div className="open-search">
                 <AddBookButton onOpenSearchPage={onOpenSearchPage}/>
             </div>
+            <BooksGrid booksFromAPI={bookSearchResults} onShelfChangeBook={onShelfChangeBook}/>
         </div>
     );
 }
