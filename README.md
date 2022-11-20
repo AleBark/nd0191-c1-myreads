@@ -7,6 +7,7 @@ To run the project without major problems, it's recommended to use the following
 
 Node and Npm versions can be easily managed through [Node Version Manager](https://github.com/nvm-sh/nvm)
 
+After that, it should be simple as ```cd /starter``` and ```npm install && npm run```
 ## Found a bug?
 
 Did you encounter any problems that prevent you from using the app? The entire state of the application is saved in the
