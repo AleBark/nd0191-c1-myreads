@@ -62,8 +62,21 @@ function App() {
         setShelves([...shelves]);
     }
 
-    function onUpdateBooksShelfFromApi(shelves) {
-        setShelvesFromApi(shelves);
+    function updateBookShelf(book, toShelfId) {
+        const updateBookShelfFromApi = async (book, toShelfId) => {
+            return await BooksAPI.update(book, toShelfId)
+        }
+
+        updateBookShelfFromApi(book, toShelfId).then(shelves => setShelvesFromApi(shelves))
+        updateBookResultsGrid(book, toShelfId)
+    }
+
+    function updateBookResultsGrid(currentBook, toShelfId) {
+        if (bookSearchResults.length) {
+            const bookIndex = bookSearchResults.findIndex(book => book.id === currentBook.id)
+            bookSearchResults[bookIndex].shelfId = toShelfId;
+            setBookSearchResults([...bookSearchResults]);
+        }
     }
 
     function onShelfChangeBook(currentBookId, fromShelfId, toShelfId) {
@@ -72,16 +85,14 @@ function App() {
         const getBookFromApi = async (currentBookId) => {
             return await BooksAPI.get(currentBookId)
         };
-        const updateBookShelfFromApi = async (book, toShelfId) => {
-            return await BooksAPI.update(book, toShelfId)
-        }
+
 
         if (bookIsBeingRemovedFromShelves(toShelfId)) {
             getBookFromApi(currentBookId).then((book) => {
                 onRemoveBook(treatBookObject(book), fromShelfId)
                 return book;
             }).then((book) => {
-                updateBookShelfFromApi(book, toShelfId).then(shelves => onUpdateBooksShelfFromApi(shelves))
+                updateBookShelf(book, toShelfId)
             });
         }
 
@@ -90,7 +101,7 @@ function App() {
                 onAddBook(treatBookObject(book), toShelfId)
                 return book;
             }).then((book) => {
-                updateBookShelfFromApi(book, toShelfId).then(shelves => onUpdateBooksShelfFromApi(shelves))
+                updateBookShelf(book, toShelfId)
             });
         }
 
@@ -105,7 +116,7 @@ function App() {
 
             onRemoveBook(book, fromShelfId)
             onAddBook(book, toShelfId)
-            updateBookShelfFromApi(book, toShelfId).then(shelves => onUpdateBooksShelfFromApi(shelves))
+            updateBookShelf(book, toShelfId)
         }
 
     }
