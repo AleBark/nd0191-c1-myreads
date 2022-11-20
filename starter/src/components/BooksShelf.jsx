@@ -7,14 +7,17 @@ const BooksShelf = ({shelf, handleOnShelfChangeBook}) => {
             <div className="bookshelf-books">
                 <ol className="books-grid">
                     {
-                        shelf.books.map((book, index) => (
-                            <li key={index}>
-                                <Book id={book.id} title={book.title} author={book.author}
-                                      imagePath={book.imagePath} shelfId={shelf.id}
-                                      onShelfChange={handleOnShelfChangeBook}/>
-                            </li>
+                        shelf.books.length ?
+                            shelf.books.map((book, index) => (
+                                <li key={index}>
+                                    <Book id={book.id} title={book.title} author={book.author}
+                                          imagePath={book.imagePath} shelfId={shelf.id}
+                                          onShelfChange={handleOnShelfChangeBook}/>
+                                </li>
 
-                        ))
+                            ))
+                            :
+                            <li>No books in this shelf yet, time to add some!</li>
                     }
                 </ol>
             </div>

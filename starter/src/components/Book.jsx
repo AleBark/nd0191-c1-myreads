@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 const Book = ({id, title, author, imagePath, shelfId, onShelfChange}) => {
 
     const handleChange = event => {
-        const toShelfId = parseInt(event.target.value);
+        const toShelfId = event.target.value;
         onShelfChange(id, shelfId, toShelfId);
     };
 
@@ -23,16 +23,16 @@ const Book = ({id, title, author, imagePath, shelfId, onShelfChange}) => {
                         <option value="shelfId" disabled>
                             Move to...
                         </option>
-                        <option value="1">
+                        <option value="currentlyReading">
                             Currently Reading
                         </option>
-                        <option value="2">
+                        <option value="wantToRead">
                             Want to Read
                         </option>
-                        <option value="3">
+                        <option value="read">
                             Read
                         </option>
-                        <option value="4">
+                        <option value="none">
                             None
                         </option>
                     </select>
