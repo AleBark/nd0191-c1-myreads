@@ -2,8 +2,8 @@
 
 To run the project without major problems, it's recommended to use the following versions on Node and Npm:
 
-- Node version: v18.12.1
-- Npm version: 8.12.2
+- Node version: v16.16.0
+- Npm version: 8.11.0
 
 Node and Npm versions can be easily managed through [Node Version Manager](https://github.com/nvm-sh/nvm)
 
