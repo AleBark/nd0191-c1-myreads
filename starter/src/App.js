@@ -135,28 +135,6 @@ function App() {
         });
 
         return selectedShelf;
-        //     // {
-        //     //     "currentlyReading": [
-        //     //     "nggnmAEACAAJ",
-        //     //     "sJf1vQAACAAJ",
-        //     //     "ycTADgAAQBAJ",
-        //     //     "PKpPCwAAQBAJ"
-        //     // ],
-        //     //     "wantToRead": [
-        //     //     "evuwdDLfAyYC",
-        //     //     "74XNzF_al3MC"
-        //     // ],
-        //     //     "read": [
-        //     //     "jAUODAAAQBAJ",
-        //     //     "IOejDAAAQBAJ",
-        //     //     "1wy49i-gQjIC"
-        //     // ]
-        //     // }
-        //     //
-        //
-        //     if (currentShelf.includes(currentBoookId)) {
-        //         return true;
-        //     }
 
     }
 
@@ -183,8 +161,7 @@ function App() {
         return treatedResults;
     }
 
-    function onBooksSearch(event) {
-        const searchTerm = event.target.value;
+    function onBooksSearch(searchTerm) {
         const getBooks = async (searchTerm) => {
             return await BooksAPI.search(searchTerm)
         };

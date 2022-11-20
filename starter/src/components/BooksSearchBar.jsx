@@ -5,8 +5,8 @@ const BookSearchBar = ({onCloseSearchPage, onBooksSearch}) => {
         onCloseSearchPage()
     }
 
-    const handleBooksSearch = (e) => {
-        onBooksSearch(e)
+    const handleBooksSearch = (event) => {
+        onBooksSearch(event.target.value)
     }
 
     return (
@@ -22,7 +22,7 @@ const BookSearchBar = ({onCloseSearchPage, onBooksSearch}) => {
                 <div className="search-books-input-wrapper">
                     <input
                         type="text"
-                        onChange={(e) => handleBooksSearch(e)}
+                        onChange={(event) => handleBooksSearch(event)}
                         placeholder="Search by title, author, or ISBN"
                     />
                 </div>
