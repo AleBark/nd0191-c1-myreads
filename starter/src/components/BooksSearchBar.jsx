@@ -1,10 +1,12 @@
-import BooksGrid from "./BooksGrid";
-
-const BookSearchBar = ({onCloseSearchPage}) => {
+const BookSearchBar = ({onCloseSearchPage, onBooksSearch}) => {
 
     const handleOnCloseSearchPage = (e) => {
         e.preventDefault()
         onCloseSearchPage()
+    }
+
+    const handleBooksSearch = (e) => {
+        onBooksSearch(e)
     }
 
     return (
@@ -20,11 +22,11 @@ const BookSearchBar = ({onCloseSearchPage}) => {
                 <div className="search-books-input-wrapper">
                     <input
                         type="text"
+                        onChange={(e) => handleBooksSearch(e)}
                         placeholder="Search by title, author, or ISBN"
                     />
                 </div>
             </div>
-            <BooksGrid/>
         </div>
     )
 }
