@@ -30,16 +30,24 @@ function App() {
 
 
     useEffect(() => {
-        setShelves(JSON.parse(window.localStorage.getItem('shelves')));
-        setShelvesFromApi(JSON.parse(window.localStorage.getItem('shelvesFromApi')));
-        setLastViewedBook(JSON.parse(window.localStorage.getItem('lastViewedBook')));
+        if (window.localStorage.getItem('shelves')) {
+            setShelves(JSON.parse(window.localStorage.getItem('shelves')));
+        }
+
+        if (window.localStorage.getItem('shelvesFromApi')) {
+            setShelvesFromApi(JSON.parse(window.localStorage.getItem('shelvesFromApi')));
+        }
+
+        if (window.localStorage.getItem('lastViewedBook')) {
+            setLastViewedBook(JSON.parse(window.localStorage.getItem('lastViewedBook')));
+        }
     }, []);
 
     useEffect(() => {
         window.localStorage.setItem('shelves', JSON.stringify(shelves));
         window.localStorage.setItem('shelvesFromApi', JSON.stringify(shelvesFromApi));
         window.localStorage.setItem('lastViewedBook', JSON.stringify(lastViewedBook));
-    }, [shelves, shelvesFromApi, lastViewedBook]);
+    }, [shelves, setShelves, shelvesFromApi, setShelvesFromApi, setLastViewedBook, lastViewedBook]);
 
     function onAddBook(currentBook, shelfId) {
         const shelfIndex = shelves.findIndex(shelf => shelf.id === shelfId);
@@ -126,7 +134,6 @@ function App() {
         }
 
         updateBookShelfFromApi(book, toShelfId).then(shelves => setShelvesFromApi(shelves))
-
         if (bookSearchResults.length) {
             const bookIndex = bookSearchResults.findIndex(bookResult => bookResult.id === book.id)
             bookSearchResults[bookIndex].shelfId = toShelfId;
